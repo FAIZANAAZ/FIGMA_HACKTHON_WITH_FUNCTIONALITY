@@ -6,81 +6,48 @@ import { Minus, Plus, Trash } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
-interface CartItem {
-  id: number
-  name: string
-  size: string
-  color: string
-  price: number
-  image: string
-  quantity: number
-}
+type CartItem = {
+  id: number;
+  name: string;
+  size: string;
+  color: string;
+  price: number;
+  picture: string;
+  quantity: number;
+};
 
 export default function ShoppingCart() {
-  const [items, setItems] = React.useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Gradient Graphic T-shirt",
-      size: "Large",
-      color: "White",
-      price: 145,
-      image: "/l3.png",
-      quantity: 1,
-    },
-    {
-      id: 2,
-      name: "Checkered Shirt",
-      size: "Medium",
-      color: "Red",
-      price: 180,
-      image: "/p3.png",
-      quantity: 1,
-    },
-    {
-      id: 3,
-      name: "Skinny Fit Jeans",
-      size: "Large",
-      color: "Blue",
-      price: 240,
-      image: "/p2.png",
-      quantity: 1,
-    },
-  ])
-// ye sb functionality chal rhi he quenty ke oper
+  const [items, setItems] = React.useState<CartItem[]>([])
 
+  React.useEffect(() => {
+    const cartItems = localStorage.getItem('cartItems')
+    if (cartItems) {
+      setItems(JSON.parse(cartItems))
+    }
+  }, [])
 
-  // reduce ye kryga ke sbsy phly oski value  acc 0 hogi kioky hmnny 0 diya he wo jiny itremske price hongy osko +kryga
-  // phir multiplay kryga quentity sy ke kitny orders hen
   const subtotal = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
-
-  // yha hm multiplay kry hen yani jb jb quanty brhy gi or subtotal me save hogi to wo os hisab sy multiplay ho jay
-  // yani 2 shirt hoi to discout zada hoga 1 hoi to km 
   const discount = subtotal * 0.2
-
-  //ismy hm delivery rakh rhy hn 
   const deliveryFee = 15
-
-  // ye + - ke bad hm total kry hen
   const total = subtotal - discount + deliveryFee
 
-// ismy hm ye kry ke kb kb quenty brhy
-  const updateQuantity = (id: number, delta: number) => {
-    setItems(items.map(item => 
-      item.id === id 
+  const updateQuantity = (id: number, size: string, color: string, delta: number) => {
+    const updatedItems = items.map(item => 
+      item.id === id && item.size === size && item.color === color
         ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-        // 1 ka matlb ak ha 1 hona lazmi he phly sy or by default hmny nichy argument me kha he ke delta 1 hoga yani 1 hi ayga wo har br
-        //or items me click hony pr wo id aygi jo map me chali hogi wo dono ko cheq kryga or jisy ye dono match hongi oski brha dega quatity yani map wha sy phly id layga or yha bhi map ye or map to har item pr jata he
-        // wo har item ki id match kry
-
         : item
-    ))
-  }
-// ismy hm delete kry hn quenty ko
-  const removeItem = (id: number) => {
-    // filter ye kra he ke hmny kha he ke agr item.id !== id id jo ai he wo or item.id agr == nhi he hen rakhlo or braber he to htado filter krdo osko 
-    setItems(items.filter(item => item.id !== id))
+    )
+    setItems(updatedItems)
+    localStorage.setItem('cartItems', JSON.stringify(updatedItems))
   }
 
+  const removeItem = (id: number, size: string, color: string) => {
+    const updatedItems = items.filter(item => 
+      !(item.id === id && item.size === size && item.color === color)
+    )
+    setItems(updatedItems)
+    localStorage.setItem('cartItems', JSON.stringify(updatedItems))
+  }
 
   return (
     <div className="mx-auto max-w-[1340px] px-[16px] md:px-[100px] py-8">
@@ -90,11 +57,11 @@ export default function ShoppingCart() {
         <div className="flex-1 bg-white border border-black/10 rounded-[20px] p-[20px_24px]">
           <div className="flex flex-col gap-6">
             {items.map((item) => (
-              <React.Fragment key={item.id}>
+              <React.Fragment key={`${item.id}-${item.size}-${item.color}`}>
                 <div className="flex gap-4">
                   <div className="w-[124px] h-[124px] bg-[#F0EEED] rounded-[8.66px] relative overflow-hidden">
                     <Image
-                      src={item.image}
+                      src={item.picture}
                       alt={item.name}
                       fill
                       className="object-cover"
@@ -113,7 +80,7 @@ export default function ShoppingCart() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => removeItem(item.id)}
+                        onClick={() => removeItem(item.id, item.size, item.color)}
                         className="text-red-500 hover:text-red-600"
                       >
                         <Trash className="h-6 w-6" />
@@ -122,8 +89,7 @@ export default function ShoppingCart() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => updateQuantity(item.id, -1)}
-                          // -1 kaa matlb ak hi km ho zada nhi
+                          onClick={() => updateQuantity(item.id, item.size, item.color, -1)}
                           className="h-5 w-5 p-0"
                         >
                           <Minus className="h-5 w-5" />
@@ -132,7 +98,7 @@ export default function ShoppingCart() {
                         <Button
                           variant="ghost"
                           size="icon"
-                          onClick={() => updateQuantity(item.id, 1)}
+                          onClick={() => updateQuantity(item.id, item.size, item.color, 1)}
                           className="h-5 w-5 p-0"
                         >
                           <Plus className="h-5 w-5" />
@@ -153,20 +119,20 @@ export default function ShoppingCart() {
           <div className="space-y-5">
             <div className="flex justify-between items-center">
               <span className="text-xl text-black/60">Subtotal</span>
-              <span className="text-xl font-bold">${subtotal}</span>
+              <span className="text-xl font-bold">${subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-xl text-black/60">Discount (-20%)</span>
-              <span className="text-xl font-bold text-red-500">-${discount}</span>
+              <span className="text-xl font-bold text-red-500">-${discount.toFixed(2)}</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-xl text-black/60">Delivery Fee</span>
-              <span className="text-xl font-bold">${deliveryFee}</span>
+              <span className="text-xl font-bold">${deliveryFee.toFixed(2)}</span>
             </div>
             <div className="border-t border-black/10 pt-5">
               <div className="flex justify-between items-center">
                 <span className="text-xl">Total</span>
-                <span className="text-2xl font-bold">${total}</span>
+                <span className="text-2xl font-bold">${total.toFixed(2)}</span>
               </div>
             </div>
           </div>
