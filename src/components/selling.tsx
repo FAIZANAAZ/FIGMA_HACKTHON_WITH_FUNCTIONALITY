@@ -22,7 +22,7 @@ export default async function Selling() {
         <h1 className="pt-5 font-integral text-[30px] md:text-[48px] font-bold leading-[57.6px]">
           Top Selling
         </h1>
-        <div className="w-full h-fit flex flex-col md:flex-row items-center justify-center md:mx-[100px] gap-4 md:gap-8 mt-10">
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-x-52 justify-items-center mt-8 sm:mt-10 md:mt-12">
           {topselling.map((item: any, index: any) => (
             <Card
               key={index}

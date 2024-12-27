@@ -13,7 +13,7 @@ export default function Home() {
   <>
   <Hero/>
   <LogoBar/>
-  <div className="md:px-[10%] ">
+  <div className="md:px-[100px] ">
  <Arrivals/>
   <Selling/> 
   <DressStyle/>

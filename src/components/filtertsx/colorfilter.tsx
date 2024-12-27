@@ -15,7 +15,7 @@ export default async function ProductFilterColor() {
   );
 
   return (
-    <div className="mx-auto max-w-7xl px-4 py-8  ">
+    <div className="mx-auto w-full px-4 py-8  ">
       <div className="bg-white flex items-center flex-col justify-center object-cover ">
         <div className="mb-8 flex items-center justify-between w-full">
           <h1 className="text-[32px] leading-[43.2px] font-bold">Casual</h1>
@@ -27,7 +27,7 @@ export default async function ProductFilterColor() {
           </select>
         </div>
 
-        <div className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 md:grid-cols-[1fr_1fr_1fr] md:gap-x-[20px] md:gap-y-[150px] md:mt-10">
+        <div className="w-full  h-fit flex flex-col md:flex-row flex-wrap justify-center items-center  md:gap-x-[50px] md:gap-y-[150px] md:mt-10">
           {res.map((item:any, index:any) => {
             // Condition to dynamically set the ID based on the index
             let dynamicId;

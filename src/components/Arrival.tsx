@@ -14,37 +14,36 @@ export default async function Arrivals() {
     }`
   );
 
-  console.log(res,"😪");
-  
+  console.log(res, "😪");
 
-  const arrivals = res.arrival; // Here, we get the array of arrivals
+  const arrivals = res.arrival;
 
   return (
     <>
       <div
-        id={"newarrivals"}
-        className="bg-white flex items-center flex-col justify-center object-cover"
+        id="newarrivals"
+        className="bg-white flex items-center flex-col justify-center px-4 sm:px-6 lg:px-8"
       >
-        <h1 className="pt-5 font-integral text-[30px] md:text-[48px] font-bold leading-[57.6px]">
+        <h1 className="pt-5 font-integral text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight text-center">
           New Arrivals
         </h1>
-        <div className="w-full h-fit flex md:flex-row flex-col items-center justify-center md:mx-[100px] gap-4 md:gap-8 md:mt-10">
-          {arrivals.map((arrival:any, index:any) => (
+        <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-x-52 justify-items-center mt-8 sm:mt-10 md:mt-12">
+          {arrivals.map((arrival: any, index: number) => (
             <Card
               key={index}
               imageUrl={arrival.arrivalimage}
               h1={arrival.arrivalheading}
-              stars={`/s${index + 1}.png`} 
+              stars={`/s${index + 1}.png`}
               ranking={arrival.arrivalranking}
               price={arrival.arrivalprice}
-              className="w-[200px] h-[200px] md:w-[295px] md:h-[298px] rounded-[13.42px] md:rounded-[20px] bg-[#F0EEED]"
+              className="w-full max-w-[295px] aspect-square rounded-[13.42px] sm:rounded-[20px] bg-[#F0EEED]"
               id={index + 1}
             />
           ))}
         </div>
-        <div className="md:mt-[150px]">
-          <Link href={"/Filter"}>
-            <button className="w-[358px] h-[46px] md:w-[295px] md:h-[52px] rounded-[62px] py-4 px-[54px] hover:bg-gray-200 flex items-center justify-center">
+        <div className="mt-10 sm:mt-12 md:mt-16 lg:mt-20">
+          <Link href="/Filter">
+            <button className="w-full max-w-[358px] h-12 sm:h-[52px] rounded-[62px] py-2 px-4 sm:px-[54px] hover:bg-gray-200 flex items-center justify-center text-sm sm:text-base transition duration-300 ease-in-out">
               View All
             </button>
           </Link>
@@ -53,3 +52,4 @@ export default async function Arrivals() {
     </>
   );
 }
+

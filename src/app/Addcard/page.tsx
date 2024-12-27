@@ -50,7 +50,7 @@ export default function ShoppingCart() {
   }
 
   return (
-    <div className="mx-auto max-w-[1340px] px-[16px] md:px-[100px] py-8">
+    <div className="mx-auto max-w-[1340px] px-[16px] sm:px-[50px] md:px-[100px] py-8">
       <h1 className="text-2xl font-bold mb-8">YOUR CART</h1>
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Cart Items */}
@@ -58,17 +58,17 @@ export default function ShoppingCart() {
           <div className="flex flex-col gap-6">
             {items.map((item) => (
               <React.Fragment key={`${item.id}-${item.size}-${item.color}`}>
-                <div className="flex gap-4">
-                  <div className="w-[124px] h-[124px] bg-[#F0EEED] rounded-[8.66px] relative overflow-hidden">
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="w-full sm:w-[124px] h-[124px] bg-[#F0EEED] rounded-[8.66px] relative overflow-hidden">
                     <Image
                       src={item.picture}
                       alt={item.name}
                       fill
-                      className="object-cover"
+                      className="md:object-cover object-contain"
                     />
                   </div>
-                  <div className="flex-1 flex justify-between">
-                    <div className="flex flex-col justify-between">
+                  <div className="flex-1 flex flex-col sm:flex-row justify-between">
+                    <div className="flex flex-col justify-between mb-4 sm:mb-0">
                       <div className="space-y-1">
                         <h3 className="font-bold text-xl">{item.name}</h3>
                         <p className="text-sm">Size: {item.size}</p>
@@ -76,7 +76,7 @@ export default function ShoppingCart() {
                       </div>
                       <p className="font-bold text-2xl">${item.price}</p>
                     </div>
-                    <div className="flex flex-col justify-between items-end">
+                    <div className="flex flex-row sm:flex-col justify-between items-end">
                       <Button
                         variant="ghost"
                         size="icon"
@@ -136,7 +136,7 @@ export default function ShoppingCart() {
               </div>
             </div>
           </div>
-          <div className="flex gap-3">
+          <div className="flex flex-col sm:flex-row gap-3">
             <div className="flex-1 flex items-center gap-3 px-4 py-3 bg-[#F0F0F0] rounded-[62px]">
               <Input
                 type="text"

@@ -1,4 +1,5 @@
 "use client"
+
 import { client } from "@/sanity/lib/client";
 import Card from "../cards";
 import { useEffect, useState } from "react";

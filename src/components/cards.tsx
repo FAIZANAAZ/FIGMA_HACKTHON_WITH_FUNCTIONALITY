@@ -14,7 +14,7 @@ interface CardProps{
 }
  const Card:React.FC<CardProps> =({imageUrl,h1,stars,price,className,id,ranking})=>{
 return(
-<Link href={`/Product/details?imageUrl=${imageUrl}&h1=${h1}&ranking=${ranking}&price=${price}`}>  
+<Link href={`/Product/id?imageUrl=${imageUrl}&h1=${h1}&ranking=${ranking}&price=${price}`}>  
   <div key={id} className={`w-[296px] h-[444px] ml-[-1px] flex flex-col gap-5 ${className} bg-white`}>
         <div className="flex flex-col gap-3 hover:transition-transform items-center md:text-start hover:scale-105">
             <Image
