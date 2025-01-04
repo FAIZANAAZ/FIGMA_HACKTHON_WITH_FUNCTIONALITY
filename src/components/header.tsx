@@ -80,13 +80,13 @@ export default function Header() {
             <Link href="/" className="text-lg hover:underline">
               Shop
             </Link>
-            <Link href="OnSale" className="text-lg hover:underline">
+            <Link href="/OnSale" className="text-lg hover:underline">
               On Sale
             </Link>
-            <Link href="NewArrival" className="text-lg hover:underline">
+            <Link href="/NewArrival" className="text-lg hover:underline">
               New Arrivals
             </Link>
-            <Link href="Brand" className="text-lg hover:underline">
+            <Link href="/Brand" className="text-lg hover:underline">
               Brands
             </Link>
             <Link href="/Product" className="text-lg hover:underline">
@@ -119,17 +119,17 @@ export default function Header() {
                   <IoIosArrowDown className="ml-1" />
                 </li>
                 <li>
-                  <Link href="#selles" className="hover:text-gray-600">
+                  <Link href="/OnSale" className="hover:text-gray-600">
                     On Sale
                   </Link>
                 </li>
                 <li>
-                  <Link href="NewArr" clssName="hover:text-gray-600">
+                  <Link href="/NewArrival" className="hover:text-gray-600">
                     New Arrivals
                   </Link>
                 </li>
                 <li>
-                  <Link href="Brand" className="hover:text-gray-600">
+                  <Link href="/Brand" className="hover:text-gray-600">
                     Brands
                   </Link>
                 </li>
