@@ -5,6 +5,7 @@ import Image from "next/image"
 import { Minus, Plus, Trash } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import Link from "next/link"
 
 type CartItem = {
   id: number;
@@ -148,9 +149,11 @@ export default function ShoppingCart() {
               Apply
             </Button>
           </div>
-          <Button className="w-full h-[60px] rounded-[62px] bg-black hover:bg-black/90 text-base">
-            Go to Checkout
+         <Link href="/Order_confirm">
+         <Button className="mt-3 w-full h-[60px] rounded-[62px] bg-black hover:bg-black/90 text-base">
+            Go to Delivery
           </Button>
+         </Link>
         </div>
       </div>
     </div>

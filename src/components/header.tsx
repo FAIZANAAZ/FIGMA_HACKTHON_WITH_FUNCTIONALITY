@@ -80,13 +80,13 @@ export default function Header() {
             <Link href="/" className="text-lg hover:underline">
               Shop
             </Link>
-            <Link href="#selles" className="text-lg hover:underline">
+            <Link href="OnSale" className="text-lg hover:underline">
               On Sale
             </Link>
-            <Link href="#newarivalss" className="text-lg hover:underline">
+            <Link href="NewArrival" className="text-lg hover:underline">
               New Arrivals
             </Link>
-            <Link href="#drassstyless" className="text-lg hover:underline">
+            <Link href="Brand" className="text-lg hover:underline">
               Brands
             </Link>
             <Link href="/Product" className="text-lg hover:underline">
@@ -124,12 +124,12 @@ export default function Header() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="#newarivalss" className="hover:text-gray-600">
+                  <Link href="NewArr" clssName="hover:text-gray-600">
                     New Arrivals
                   </Link>
                 </li>
                 <li>
-                  <Link href="#drassstyless" className="hover:text-gray-600">
+                  <Link href="Brand" className="hover:text-gray-600">
                     Brands
                   </Link>
                 </li>
