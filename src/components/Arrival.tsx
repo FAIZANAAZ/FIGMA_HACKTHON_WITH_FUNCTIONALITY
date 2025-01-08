@@ -33,7 +33,6 @@ export default async function Arrivals() {
               key={index}
               imageUrl={arrival.arrivalimage}
               h1={arrival.arrivalheading}
-              stars={`/s${index + 1}.png`}
               ranking={arrival.arrivalranking}
               price={arrival.arrivalprice}
               className="w-full max-w-[295px] aspect-square rounded-[13.42px] sm:rounded-[20px] bg-[#F0EEED]"

@@ -28,7 +28,7 @@ export default async function Selling() {
               key={index}
               imageUrl={item.topsellingimage}
               h1={item.topsellingheading}
-              stars={`/s${index + 5}.png`} // Update this according to your data or logic for star images
+    // Update this according to your data or logic for star images
               ranking={item.topsellingranking}
               price={item.topsellingprice}
               className="w-[200px] h-[200px] md:w-[295px] md:h-[298px] rounded-[13.42px] md:rounded-[20px] bg-[#F0EEED]"
