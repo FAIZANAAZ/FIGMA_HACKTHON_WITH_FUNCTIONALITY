@@ -19,15 +19,15 @@ export default  function ProductDetail({ searchParams }: { searchParams: Promise
   
   const [data, setdata] = useState<{ imageUrl: string; h1: string; ranking: number; price: number }>({ imageUrl: '', h1: '', ranking: 0, price: 0 })
 
-useEffect(() => {
+   useEffect(() => {
   
   const fetchData = async () => {
-    const dataparams :any=  searchParams;
+    const dataparams =  searchParams;
     const { imageUrl, h1, ranking, price }= await dataparams
     setdata({ imageUrl, h1, ranking, price });
   }
   fetchData()
-}, [])
+}, [searchParams])
 
 
   // const cardData = searchParams.find((item) => item.id == cardid);
