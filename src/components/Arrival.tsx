@@ -2,6 +2,15 @@ import Link from "next/link";
 import Card from "./cards";
 import { client } from "@/sanity/lib/client";
 
+
+
+interface Arrival {
+  arrivalimage: string;
+  arrivalheading: string;
+  arrivalranking: number;
+  arrivalprice: number;
+  ranking:string;
+}
 export default async function Arrivals() {
   const res = await client.fetch(
     `*[_type == 'landingpage'][0].sections[0]{
@@ -28,12 +37,12 @@ export default async function Arrivals() {
           New Arrivals
         </h1>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-x-52 justify-items-center mt-8 sm:mt-10 md:mt-12">
-          {arrivals.map((arrival: any, index: number) => (
+          {arrivals.map((arrival:Arrival , index: number) => (
             <Card
               key={index}
               imageUrl={arrival.arrivalimage}
               h1={arrival.arrivalheading}
-              ranking={arrival.arrivalranking}
+              ranking={arrival.arrivalranking.toString()}
               price={arrival.arrivalprice}
               className="w-full max-w-[295px] aspect-square rounded-[13.42px] sm:rounded-[20px] bg-[#F0EEED]"
               id={index + 1}

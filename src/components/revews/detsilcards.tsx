@@ -4,6 +4,12 @@ import { client } from "@/sanity/lib/client";
 import Card from "../cards";
 import { useEffect, useState } from "react";
 
+interface detailcards {
+  productImage: string;
+  productHeading: string;
+  productRating: number;
+  productPrice: number;
+}
 export default  function Detailcards
 () {
   const [response, setresponse] = useState<any>([])
@@ -33,7 +39,7 @@ export default  function Detailcards
       </h1>
       <div className=" w-full h-fit flex flex-col md:flex-row items-center justify-center md:mx-[100px] gap-4 md:gap-8 md:mt-10">
         {/* card1 */}
-        {response.map((item: any, index: any) => {
+        {response.map((item:detailcards , index: number) => {
           
        
            return(
@@ -41,7 +47,7 @@ export default  function Detailcards
             key={index}
             imageUrl={item.productImage}
             h1={item.productHeading}
-            ranking={item.productRating}
+            ranking={item.productRating.toString()}
             price={item.productPrice}
             className="w-[200px] h-[200px] md:w-[295px] md:h-[298px] rounded-[13.42px] md:rounded-[20px] bg-[#F0EEED] " id={index+9}/>
            )

@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/sheet"
 
 export default function Header() {
-  const [showBanner, setShowBanner] = React.useState(true)
+  
 
   return (
     <header className="  w-full">
@@ -35,7 +35,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               className="text-white hover:text-white/80 hidden sm:flex"
-              onClick={() => setShowBanner(false)}
+              
             >
               <RxCross2 className="h-4 w-4 text-end hidden md:flex" />
             </Button>

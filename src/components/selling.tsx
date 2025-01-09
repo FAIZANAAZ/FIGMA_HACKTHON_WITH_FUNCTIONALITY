@@ -2,9 +2,18 @@ import Link from "next/link";
 import Card from "./cards";
 import { client } from "@/sanity/lib/client";
 
+
+
+interface TopsellingItem {
+  topsellingimage: string;
+  topsellingheading: string;
+  topsellingranking: number;
+  topsellingprice: number;
+  ranking:string;
+}
 export default async function Selling() {
   const res = await client.fetch(
-    `*[_type == 'landingpage'][2].sections[0]{'topselling': topselling[] {'topsellingheading': topsellingheading,'topsellingimage': topsellingimage.asset->url,'topsellingranking': topsellingranking,'topsellingprice': topsellingprice}
+    `*[_type == 'landingpage'][2].sections[0]{'topselling': topselling[] {'topsellingheading': topsellingheading,'topsellingimage': topsellingimage.asset->url,'topsellingranking': topsellingranking,'topsellingprice': topsellingprice }
     }`
   );
 
@@ -23,13 +32,13 @@ export default async function Selling() {
           Top Selling
         </h1>
         <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8 md:gap-10 lg:gap-x-52 justify-items-center mt-8 sm:mt-10 md:mt-12">
-          {topselling.map((item: any, index: any) => (
+          {topselling.map((item: TopsellingItem, index: number) => (
             <Card
               key={index}
               imageUrl={item.topsellingimage}
               h1={item.topsellingheading}
     // Update this according to your data or logic for star images
-              ranking={item.topsellingranking}
+        ranking={item.topsellingranking.toString()}
               price={item.topsellingprice}
               className="w-[200px] h-[200px] md:w-[295px] md:h-[298px] rounded-[13.42px] md:rounded-[20px] bg-[#F0EEED]"
               id={index + 5}

@@ -1,5 +1,4 @@
 import { client } from "@/sanity/lib/client";
-import customerData from "./../constant/happycus";
 import { IoStarSharp } from "react-icons/io5";
 
 export default async function HappyCustomers() {
@@ -14,7 +13,7 @@ export default async function HappyCustomers() {
       </h1>
 
       <div className="flex overflow-x-auto items-center justify-start gap-4 sm:gap-5 contain-content pb-4 md:pb-0">
-        {happyCustomerData.map((customer:any, index:number) => (
+        {happyCustomerData.map((customer: { name: string; review: string }, index:number) => (
           <div
             key={index}
             className="w-[280px] xs:w-[320px] sm:w-[350px] md:w-[386px] h-auto sm:h-[220px] md:h-[240px] text-base sm:text-lg md:text-xl border border-[#0000001A] rounded-[20px] p-4 sm:p-5 md:py-[28px] md:px-[32px] flex flex-col gap-3 sm:gap-4 md:gap-5 flex-shrink-0"
