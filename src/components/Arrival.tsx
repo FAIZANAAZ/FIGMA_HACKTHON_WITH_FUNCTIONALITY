@@ -14,7 +14,7 @@ export default async function Arrivals() {
     }`
   );
 
-  console.log(res, "😪");
+  
 
   const arrivals = res.arrival;
 

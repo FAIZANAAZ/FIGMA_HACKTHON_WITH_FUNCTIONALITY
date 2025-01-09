@@ -41,7 +41,6 @@ export default  function Detailcards
             key={index}
             imageUrl={item.productImage}
             h1={item.productHeading}
-            stars="/s1.png"
             ranking={item.productRating}
             price={item.productPrice}
             className="w-[200px] h-[200px] md:w-[295px] md:h-[298px] rounded-[13.42px] md:rounded-[20px] bg-[#F0EEED] " id={index+9}/>
