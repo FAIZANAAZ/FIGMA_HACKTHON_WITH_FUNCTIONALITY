@@ -1,7 +1,7 @@
 
 
 // esylikhny sy ye hoga ke hmy bar bar nhi cards ka alg alg data bnanana nhi pryga blky wo khod hi a jayga ak button ke again add krna he ya nhi 
-export default {
+export const  newarrival={
     title:"NEW ARRIVALS",
     name:"newarrival",
     type:"object",

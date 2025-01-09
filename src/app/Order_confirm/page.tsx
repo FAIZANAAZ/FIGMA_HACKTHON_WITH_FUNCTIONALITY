@@ -22,7 +22,7 @@ export default function OrderForm() {
   }
 
   const validateForm = () => {
-    let errors: { name?: string; email?: string; phone?: string; address?: string } = {}
+    const errors: { name?: string; email?: string; phone?: string; address?: string } = {}
     if (!formData.name.trim()) errors.name = 'Naam zaruri hai'
     if (!formData.email.trim()) errors.email = 'Email zaruri hai'
     if (!formData.phone.trim()) errors.phone = 'Phone number zaruri hai'

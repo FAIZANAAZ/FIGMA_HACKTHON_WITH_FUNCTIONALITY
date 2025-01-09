@@ -1,5 +1,5 @@
 
-export default {
+export const ProductDetail={
     title:"Product Detail",
     name:"ProductDetail",
     type:"document",

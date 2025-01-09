@@ -1,7 +1,7 @@
 
 // hm ismy koi name nhi dengy ismy ye isi liye krty hen ke ak man section me pora landing page a jay or phely nhi
 // jiski type document hoti he wahi alag se section bn kr dikhta he
-export default  {
+export  const landingpage={
  title :"Landing Page",
  name:"landingpage",
  type:"document",

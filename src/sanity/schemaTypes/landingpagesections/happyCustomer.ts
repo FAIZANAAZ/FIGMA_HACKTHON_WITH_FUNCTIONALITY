@@ -1,4 +1,4 @@
-export default{
+export const happyCustomer =  {
     title:"Happy Customer",
     name:"happyCustomer",
     type:"object",

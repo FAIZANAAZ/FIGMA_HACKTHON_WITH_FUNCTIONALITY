@@ -1,4 +1,4 @@
-export default {
+export const  topSelling = {
     title: "TOP SELLING",
     name: "topSelling",
     type: "object",

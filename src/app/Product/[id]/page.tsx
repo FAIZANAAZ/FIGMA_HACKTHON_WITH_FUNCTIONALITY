@@ -48,8 +48,8 @@ export default  function ProductDetail({ searchParams }: { searchParams: Promise
     const existingCart = JSON.parse(localStorage.getItem('cartItems') || '[]');
     
     // Check if the item already exists in the cart
-    const existingItemIndex = existingCart.findIndex((item: any) => 
-      item.imageUrl === newItem.picture && item.size === newItem.size && item.color === newItem.color
+    const existingItemIndex = existingCart.findIndex((item:{ name: string; size: string; color: string; picture: string; quantity: number;}) => 
+      item.picture === newItem.picture && item.size === newItem.size && item.color === newItem.color
     );
 
     if (existingItemIndex !== -1) {

@@ -1,5 +1,5 @@
 
-export default{
+export const casualPage={
     title:"Casual Page",
     name:"casualPage",
     type:"document",

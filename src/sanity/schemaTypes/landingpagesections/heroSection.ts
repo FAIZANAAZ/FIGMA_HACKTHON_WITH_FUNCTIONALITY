@@ -1,6 +1,6 @@
 
 
-export default{
+export const heroSection = {
     title : "Hero",
     name: "heroSection",
     type: "object",
