@@ -12,7 +12,7 @@ interface detailcards {
 }
 export default  function Detailcards
 () {
-  const [response, setresponse] = useState<any>([])
+  const [response, setresponse] = useState<detailcards[]>([])
 
   useEffect( () => {
    const responsefunc = async () => {

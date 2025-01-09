@@ -17,7 +17,7 @@ export default  function ProductDetail({ searchParams }: { searchParams: Promise
 
   
   
-  const [data, setdata] = useState<any>([])
+  const [data, setdata] = useState<{ imageUrl: string; h1: string; ranking: number; price: number }>({ imageUrl: '', h1: '', ranking: 0, price: 0 })
 
 useEffect(() => {
   

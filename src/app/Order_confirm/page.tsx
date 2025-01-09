@@ -13,7 +13,7 @@ export default function OrderForm() {
   })
   const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; address?: string }>({})
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData(prevState => ({
       ...prevState,

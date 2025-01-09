@@ -6,6 +6,13 @@ import { client } from "@/sanity/lib/client";
 import { fetchAndUploadProducts } from "@/services/api";
 import { useEffect, useState } from "react";
 
+interface CardItem {
+  image: string;
+  name: string;
+  rating: number;
+  price: number;
+  _id: number;
+}
 export default function ProductFilterColor() {
   const [Cardapi, setCard] = useState([]);
 
@@ -63,13 +70,13 @@ export default function ProductFilterColor() {
         </div>
 
         <div className="w-full h-fit grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8 md:gap-x-[70px] md:gap-y-[150px] mt-4 sm:mt-6 md:mt-10">
-          {Cardapi.map((item:any, index:any) => {
+          {Cardapi.map((item:CardItem, index: number) => {
             return (
               <Card
                 key={index}
                 imageUrl={item.image}
                 h1={item.name}
-                ranking={item.rating}
+                ranking={item.rating.toString()}
                 price={item.price}
                 id={item._id}
                 className="w-full max-w-[295px] h-auto aspect-square rounded-[13.42px] md:rounded-[20px] bg-[#F0EEED] mx-auto"
