@@ -8,7 +8,7 @@ interface CardProps{
     ranking:string;
     price:number;
     className:string
-    id:number
+    id:number|string
 }
  const Card:React.FC<CardProps> =({imageUrl,h1,price,className,id,ranking})=>{
 return(

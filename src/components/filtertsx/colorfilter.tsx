@@ -11,7 +11,7 @@ interface CardItem {
   name: string;
   rating: number;
   price: number;
-  _id: number;
+  _id: string;
 }
 export default function ProductFilterColor() {
   const [Cardapi, setCard] = useState([]);
@@ -37,6 +37,7 @@ export default function ProductFilterColor() {
         await fetchAndUploadProducts();
 
         const products = await client.fetch(`*[_type == "product" ][]{
+          _id,
           name,
           description,
           price,
@@ -78,7 +79,7 @@ export default function ProductFilterColor() {
                 h1={item.name}
                 ranking={item.rating.toString()}
                 price={item.price}
-                id={item._id}
+                id={item._id.toString()}
                 className="w-full max-w-[295px] h-auto aspect-square rounded-[13.42px] md:rounded-[20px] bg-[#F0EEED] mx-auto"
               />
             );
