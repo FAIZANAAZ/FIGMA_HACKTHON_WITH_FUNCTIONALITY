@@ -10,8 +10,7 @@ interface detailcards {
   productRating: number;
   productPrice: number;
 }
-export default  function Detailcards
-() {
+export default  function Detailcards() {
   const [response, setresponse] = useState<detailcards[]>([])
 
   useEffect( () => {
