@@ -1,125 +1,264 @@
 'use client'
 
-import Link from 'next/link'
 import { useState } from 'react'
-import toast from 'react-hot-toast'
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Button } from "@/components/ui/button"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Truck, User,  Building, Package } from 'lucide-react'
+import JsonResponseViewer from '../../components/JsonResponseViewer'
+import { PostMethod } from '@/services/shipment'
 
-export default function OrderForm() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    address: ''
-  })
-  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string; address?: string }>({})
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }))
-  }
 
-  const validateForm = () => {
-    const errors: { name?: string; email?: string; phone?: string; address?: string } = {}
-    if (!formData.name.trim()) errors.name = 'Naam zaruri hai'
-    if (!formData.email.trim()) errors.email = 'Email zaruri hai'
-    if (!formData.phone.trim()) errors.phone = 'Phone number zaruri hai'
-    if (!formData.address.trim()) errors.address = 'Address zaruri hai'
-    return errors
-  }
+export default function ShipmentForm() {
+  // Carrier and Service
+  const [carrierId, setCarrierId] = useState('se-1584179')
+  const [serviceCode, setServiceCode] = useState('usps_priority_mail')
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  // Ship To
+  const [shipToName, setShipToName] = useState('')
+  const [shipToPhone, setShipToPhone] = useState('')
+  const [shipToAddress, setShipToAddress] = useState('')
+  const [shipToCity, setShipToCity] = useState('')
+  const [shipToState, setShipToState] = useState('')
+  const [shipToPostalCode, setShipToPostalCode] = useState('')
+  const [shipToCountryCode, setShipToCountryCode] = useState('US')
+  const [shipToResidential, setShipToResidential] = useState('yes')
+
+  // Ship From
+  const [shipFromName, setShipFromName] = useState('')
+  const [shipFromCompany, setShipFromCompany] = useState('')
+  const [shipFromPhone, setShipFromPhone] = useState('')
+  const [shipFromAddress, setShipFromAddress] = useState('')
+  const [shipFromCity, setShipFromCity] = useState('')
+  const [shipFromState, setShipFromState] = useState('')
+  const [shipFromPostalCode, setShipFromPostalCode] = useState('')
+  const [shipFromCountryCode, setShipFromCountryCode] = useState('US')
+  const [shipFromResidential, setShipFromResidential] = useState('no')
+
+  // Package
+  const [weight, setWeight] = useState(0)
+  const [height, setHeight] = useState(0)
+  const [width, setWidth] = useState(0)
+  const [length, setLength] = useState(0)
+
+  //alert-dailog
+  const [shipmentResponse, setShipmentResponse] = useState(null)
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    const formErrors = validateForm()
-    if (Object.keys(formErrors).length === 0) {
-      console.log('Form submitted:', formData)
-      toast.success('Aapka order successfully submit ho gaya hai!', {
-        duration: 3000,
-        position: 'top-center',
-      })
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        address: ''
-      })
-    } else {
-      setErrors(formErrors)
+    
+    const submitData = {
+      to_name: shipToName,
+      to_phone: shipToPhone,
+      to_address: shipToAddress,
+      to_city: shipToCity,
+      from_name: shipFromName,
+      from_company: shipFromCompany,
+      from_phone: shipFromPhone,
+      from_address: shipFromAddress,
+      from_city: shipFromCity,
+      weight_value: weight,
+      height,
+      width,
+      length
     }
+
+    const data = await PostMethod(submitData)
+    setShipmentResponse(data)
+
   }
 
   return (
-    <form onSubmit={handleSubmit} className="max-w-lg mx-auto mt-8 p-8 bg-gray-50 rounded-xl shadow-lg">
-      <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Delivery Information</h2>
-      
-      <div className="mb-5">
-        <label htmlFor="name" className="block text-lg font-medium text-gray-700 mb-2">Naam:</label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        {errors.name && <p className="text-red-500 text-sm mt-2">{errors.name}</p>}
-      </div>
+    <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl mx-auto my-5">
+      <Card className="bg-blue-50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Truck className="text-blue-500" />
+            Shipment Details
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="carrier_id">Carrier ID</Label>
+              <Input id="carrier_id" value={carrierId} onChange={(e) => setCarrierId(e.target.value)} autoComplete='off' />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="service_code">Service Code</Label>
+              <Select value={serviceCode} onValueChange={setServiceCode}>
+                <SelectTrigger id="service_code">
+                  <SelectValue placeholder="Select a service code" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="usps_priority_mail_express">USPS Priority Mail Express</SelectItem>
+                  <SelectItem value="usps_priority_mail">USPS Priority Mail</SelectItem>
+                  <SelectItem value="usps_first_class_mail">USPS First Class Mail</SelectItem>
+                  <SelectItem value="ups_ground">UPS Ground</SelectItem>
+                  <SelectItem value="fedex_ground">FedEx Ground</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="mb-5">
-        <label htmlFor="email" className="block text-lg font-medium text-gray-700 mb-2">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        {errors.email && <p className="text-red-500 text-sm mt-2">{errors.email}</p>}
-      </div>
+      <Card className="bg-green-50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <User className="text-green-500" />
+            Ship To
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ship_to_name">Name</Label>
+              <Input id="ship_to_name" value={shipToName} onChange={(e) => setShipToName(e.target.value)} autoComplete='off' />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ship_to_phone">Phone</Label>
+              <Input id="ship_to_phone" value={shipToPhone} onChange={(e) => setShipToPhone(e.target.value)} autoComplete='off' />
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="ship_to_address">Address</Label>
+            <Input id="ship_to_address" value={shipToAddress} onChange={(e) => setShipToAddress(e.target.value)} autoComplete='off'/>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ship_to_city">City</Label>
+              <Input id="ship_to_city" value={shipToCity} onChange={(e) => setShipToCity(e.target.value)} autoComplete='off'/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ship_to_state">State</Label>
+              <Input id="ship_to_state" value={shipToState} onChange={(e) => setShipToState(e.target.value)} autoComplete='off'/>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ship_to_postal_code">Postal Code</Label>
+              <Input id="ship_to_postal_code" value={shipToPostalCode} onChange={(e) => setShipToPostalCode(e.target.value)} autoComplete='off'/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ship_to_country_code">Country Code</Label>
+              <Input id="ship_to_country_code" value={shipToCountryCode} onChange={(e) => setShipToCountryCode(e.target.value)} autoComplete='off'/>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="ship_to_residential">Residential?</Label>
+            <Select value={shipToResidential} onValueChange={setShipToResidential}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="yes">Yes</SelectItem>
+                <SelectItem value="no">No</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="mb-5">
-        <label htmlFor="phone" className="block text-lg font-medium text-gray-700 mb-2">Phone Number:</label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          required
-        />
-        {errors.phone && <p className="text-red-500 text-sm mt-2">{errors.phone}</p>}
-      </div>
+      <Card className="bg-yellow-50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Building className="text-yellow-500" />
+            Ship From
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ship_from_name">Name</Label>
+              <Input id="ship_from_name" value={shipFromName} onChange={(e) => setShipFromName(e.target.value)} autoComplete='off'/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ship_from_company">Company Name</Label>
+              <Input id="ship_from_company" value={shipFromCompany} onChange={(e) => setShipFromCompany(e.target.value)} autoComplete='off'/>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="ship_from_phone">Phone</Label>
+            <Input id="ship_from_phone" value={shipFromPhone} onChange={(e) => setShipFromPhone(e.target.value)} autoComplete='off'/>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="ship_from_address">Address</Label>
+            <Input id="ship_from_address" value={shipFromAddress} onChange={(e) => setShipFromAddress(e.target.value)} autoComplete='off'/>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ship_from_city">City</Label>
+              <Input id="ship_from_city" value={shipFromCity} onChange={(e) => setShipFromCity(e.target.value)} autoComplete='off'/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ship_from_state">State</Label>
+              <Input id="ship_from_state" value={shipFromState} onChange={(e) => setShipFromState(e.target.value)} autoComplete='off'/>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="ship_from_postal_code">Postal Code</Label>
+              <Input id="ship_from_postal_code" value={shipFromPostalCode} onChange={(e) => setShipFromPostalCode(e.target.value)} autoComplete='off'/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="ship_from_country_code">Country Code</Label>
+              <Input id="ship_from_country_code" value={shipFromCountryCode} onChange={(e) => setShipFromCountryCode(e.target.value)} autoComplete='off'/>
+            </div>
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="ship_from_residential">Residential?</Label>
+            <Select value={shipFromResidential} onValueChange={setShipFromResidential}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select..." />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="yes">Yes</SelectItem>
+                <SelectItem value="no">No</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="mb-6">
-        <label htmlFor="address" className="block text-lg font-medium text-gray-700 mb-2">Delivery Address:</label>
-        <textarea
-          id="address"
-          name="address"
-          value={formData.address}
-          onChange={handleChange}
-          className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-          rows={4}
-          required
-        ></textarea>
-        {errors.address && <p className="text-red-500 text-sm mt-2">{errors.address}</p>}
-      </div>
+      <Card className="bg-purple-50">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Package className="text-purple-500" />
+            Package Details
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="weight">Weight (ounce)</Label>
+              <Input id="weight" type="number" value={weight} onChange={(e) => setWeight(Number(e.target.value))} autoComplete='off'/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="height">Height (inch)</Label>
+              <Input id="height" type="number" value={height} onChange={(e) => setHeight(Number(e.target.value))} autoComplete='off'/>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="width">Width (inch)</Label>
+              <Input id="width" type="number" value={width} onChange={(e) => setWidth(Number(e.target.value))} autoComplete='off'/>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="length">Length (inch)</Label>
+              <Input id="length" type="number" value={length} onChange={(e) => setLength(Number(e.target.value))} autoComplete='off'/>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      <div className="text-center">
-        <Link href="/Thanks">
-          <button 
-            type="submit" 
-            className="w-full px-6 py-3 bg-blue-600 text-white text-lg font-semibold rounded-lg shadow-md hover:bg-blue-700 transition focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            Submit an Order
-          </button>
-        </Link>
-      </div>
+      <Button type="submit" className="w-full">Submit Shipment</Button>
+
+      {shipmentResponse && <JsonResponseViewer data={shipmentResponse} />}
+
     </form>
   )
 }
+
