@@ -1,5 +1,6 @@
 import { client } from "@/sanity/lib/client";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function Hero() {
     const res = await client.fetch(`*[_type=='landingpage'][1]{'frontWebImage':sections[0].frontWebImage.asset->url}`);
@@ -16,9 +17,9 @@ export default async function Hero() {
                 <p className="text-sm sm:text-[16px] leading-snug sm:leading-[22px] text-[#00000099] mb-3 sm:mb-5 font-satoshi">
                     Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
                 </p>
-               <div className="w-full justify-center items-center"> <button className="w-full sm:w-[358px] md:w-[210px] h-[52px] flex justify-center items-center px-4 sm:px-[54px] py-4 bg-black text-white rounded-[62px] hover:bg-gray-800 mb-6 sm:mb-[38px]">
+               <div className="w-full justify-center items-center"><Link href="/Product"> <button className="w-full sm:w-[358px] md:w-[210px] h-[52px] flex justify-center items-center px-4 sm:px-[54px] py-4 bg-black text-white rounded-[62px] hover:bg-gray-800 mb-6 sm:mb-[38px]">
                     Shop Now
-                </button></div>
+                </button></Link></div>
             </div>                                
 
             {/* Right Background */}

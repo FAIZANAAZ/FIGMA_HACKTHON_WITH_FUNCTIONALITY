@@ -151,7 +151,7 @@ export default function ShoppingCart() {
           </div>
          <Link href="/Order_confirm">
          <Button className="mt-3 w-full h-[60px] rounded-[62px] bg-black hover:bg-black/90 text-base">
-            Go to Delivery
+         Add Address Details
           </Button>
          </Link>
         </div>

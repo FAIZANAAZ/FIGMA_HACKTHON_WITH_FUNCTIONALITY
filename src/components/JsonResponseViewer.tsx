@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Button } from "@/components/ui/button"
 import { Download, Package, Truck, DollarSign, MapPin } from 'lucide-react'
 import { AlertDialog, AlertDialogContent, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog"
+import Link from 'next/link'
 
 // ye interface oska he jo body me bheja he hmny
 interface ShipmentResponse {
@@ -60,13 +61,21 @@ export default function JsonResponseViewer({ data }: JsonResponseViewerProps) {
   }
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto  p-4">
       <Button 
         className="bg-blue-900 border-2 border-black hover:bg-blue-600 text-white"
         onClick={() => setIsDialogOpen(true)}
       >
         View Shipment Details
       </Button>
+      <Link href={`/Thanks`}>
+      <Button 
+        className="bg-blue-900 border-2 ml-3 border-black hover:bg-blue-600 text-white"
+        
+      >
+        Ready For Order
+      </Button>
+      </Link>
 
       <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         {/* ye function ko open close ke khod hndle krta he jesy  isDialogOpen he yani jo usestate me he bydefault wo hoga or phir onOpenChange pr hmny 
@@ -121,6 +130,7 @@ export default function JsonResponseViewer({ data }: JsonResponseViewerProps) {
             >
               Close
             </Button>
+
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
