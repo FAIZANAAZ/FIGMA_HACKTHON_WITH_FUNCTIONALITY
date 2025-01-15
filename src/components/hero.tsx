@@ -1,19 +1,44 @@
+"use client"
 import { client } from "@/sanity/lib/client";
+import { Any } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
-export default async function Hero() {
-    const res = await client.fetch(`*[_type=='landingpage'][1]{'frontWebImage':sections[0].frontWebImage.asset->url}`);
 
-    const { frontWebImage } = res;
-    
+export default  function Hero() {
+const [fetchdata, setfetchData] = useState<Any>()
+   useEffect(() => {
+    const fetchimage =async()=>{
+        const res = await client.fetch(`*[_type=='landingpage'][1]{'frontWebImage':sections[0].frontWebImage.asset->url}`);
+        
+        const { frontWebImage } = res;
+        setfetchData(frontWebImage)
+
+
+        return frontWebImage
+        
+    }
+    fetchimage()
+   })
     return (
         <section className="w-full h-auto bg-[#F2F0F1] flex flex-col md:flex-row justify-between font-sans">
             {/* Left Content */}
-            <div className="flex-1 flex flex-col justify-center items-start gap-4 sm:gap-6 p-6 sm:p-8 md:px-[100px] lg:px-[120px] xl:px-[140px]">
+           
+            <div className="flex-1 flex flex-col justify-center items-start gap-4 sm:gap-6 p-6 sm:p-8 md:px-[100px] lg:px-[120px] xl:px-[140px]"> <motion.div
+          initial={{opacity :0 ,x:-100}}
+         
+           whileInView={{opacity:1,x:0}}
+      
+     
+           transition={{duration:1 ,ease:"easeInOut" }}
+   
+        >
                 <h1 className="text-black text-2xl sm:text-[36px] md:text-[48px] lg:text-[56px] xl:text-[64px] font-extrabold leading-tight sm:leading-8 md:leading-[1.2] lg:leading-[64px] mb-2 sm:mb-3 md:mb-5 font-integral">
                     FIND CLOTHES THAT MATCHES YOUR STYLE
                 </h1>
+                </motion.div>
                 <p className="text-sm sm:text-[16px] leading-snug sm:leading-[22px] text-[#00000099] mb-3 sm:mb-5 font-satoshi">
                     Browse through our diverse range of meticulously crafted garments, designed to bring out your individuality and cater to your sense of style.
                 </p>
@@ -21,11 +46,14 @@ export default async function Hero() {
                     Shop Now
                 </button></Link></div>
             </div>                                
-
+       
             {/* Right Background */}
+            
             <div className="relative overflow-hidden w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[550px] xl:h-[700px] md:flex-1 flex justify-center items-center">
+                
+                
                 <Image
-                    src={frontWebImage}
+                    src={fetchdata}
                     alt="hero image"
                     fill
                     className="object-contain md:object-cover"

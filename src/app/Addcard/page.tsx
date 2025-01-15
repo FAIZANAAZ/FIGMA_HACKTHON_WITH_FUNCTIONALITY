@@ -33,18 +33,22 @@ export default function ShoppingCart() {
   const total = subtotal - discount + deliveryFee
 
   const updateQuantity = (id: number, size: string, color: string, delta: number) => {
-    const updatedItems = items.map(item => 
-      item.id === id && item.size === size && item.color === color
-        ? { ...item, quantity: Math.max(1, item.quantity + delta) }
-        : item
-    )
-    setItems(updatedItems)
-    localStorage.setItem('cartItems', JSON.stringify(updatedItems))
-  }
-
-  const removeItem = (id: number, size: string, color: string) => {
+    const updatedItems = items.map((item) => {
+      if (item.id === id && item.size === size && item.color === color) {
+        return { ...item, quantity: Math.max(1, item.quantity + delta) };
+      }
+      return item;
+    });
+  
+    const finalItems = updatedItems.filter(item => item.quantity > 0);
+  
+    setItems(finalItems);
+    localStorage.setItem('cartItems', JSON.stringify(finalItems));
+  };
+  
+  const removeItem = (id: number, picture:string) => {
     const updatedItems = items.filter(item => 
-      !(item.id === id && item.size === size && item.color === color)
+      !(item.id === id && item.picture === picture )
     )
     setItems(updatedItems)
     localStorage.setItem('cartItems', JSON.stringify(updatedItems))
@@ -62,7 +66,7 @@ export default function ShoppingCart() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="w-full sm:w-[124px] h-[124px] bg-[#F0EEED] rounded-[8.66px] relative overflow-hidden">
                     <Image
-                      src={item.picture}
+                      src={item.picture }
                       alt={item.name}
                       fill
                       className="md:object-cover object-contain"
@@ -81,7 +85,7 @@ export default function ShoppingCart() {
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => removeItem(item.id, item.size, item.color)}
+                        onClick={() => removeItem(item.id, item.picture)}
                         className="text-red-500 hover:text-red-600"
                       >
                         <Trash className="h-6 w-6" />
